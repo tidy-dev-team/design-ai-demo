@@ -1,0 +1,224 @@
+@import '../../styles/tokens.css';
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Page shell — matches Figma "TQ" frame: cream background
+   ───────────────────────────────────────────────────────────────────────── */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-neutral-100); /* #f5f5f3 cream */
+  font-family: var(--font);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Main area — 24px cream gutter on all sides around the content card
+   (Figma Main Content: paddingLeft 24, paddingTop 24)
+   ───────────────────────────────────────────────────────────────────────── */
+
+.main {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Content card — Figma node 350:1142
+   fill:   rgba(255, 255, 255, 0.5)   (50 % white over cream ≈ #fafaf9)
+   radius: 24 px
+   border: 1.5 px solid white (from absolutely-positioned inner frame 350:1143)
+
+   Inner node 350:1144
+   padding: 24 px (left / top / bottom)   gap: 24 px
+   ───────────────────────────────────────────────────────────────────────── */
+
+.contentCard {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
+  border: 1.5px solid rgba(255, 255, 255, 1);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Heading — Figma: Inter 26px / weight 400 / #171717
+   ───────────────────────────────────────────────────────────────────────── */
+
+.heading {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 26px;
+  font-weight: var(--fw-regular);
+  color: var(--color-neutral-900);
+  letter-spacing: 0.008em;
+  line-height: 1.5;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Search row — Figma SearchBar width: 740 px
+   ───────────────────────────────────────────────────────────────────────── */
+
+.searchRow {
+  display: flex;
+}
+
+.searchRow > * {
+  max-width: 740px;
+  width: 100%;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Suggestion tags — 8 px gap
+   ───────────────────────────────────────────────────────────────────────── */
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   KPI row — Figma: HORIZONTAL, 16 px gap, both cards flexGrow: 1 (equal)
+   ───────────────────────────────────────────────────────────────────────── */
+
+.kpiRow {
+  display: flex;
+  gap: 16px;
+}
+
+.kpiCard {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+}
+
+/* Stretch CardKpi (which has a hardcoded width) to fill its flex cell */
+.kpiCard > * {
+  width: 100% !important;
+  flex: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Left card slot — pension summary list + insight banner
+   ───────────────────────────────────────────────────────────────────────── */
+
+.pensionContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  gap: 16px;
+}
+
+.summaryList {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Right card slot — allocation bar chart + 3-column legend
+   ───────────────────────────────────────────────────────────────────────── */
+
+.portfolioContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+/* Bars — absolute px heights so no %-resolution chain needed */
+.barChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 210px;
+  flex-shrink: 0;
+}
+
+.bar {
+  flex: 1;
+  border-radius: 16px;
+}
+
+/* 3-column legend — matches Figma bar-chart legend layout */
+.fundList {
+  display: flex;
+  gap: 12px;
+}
+
+.fundItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fundName {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fundDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.fundLabel {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: var(--fw-regular);
+  color: var(--color-neutral-600);
+  line-height: 1.2;
+}
+
+.fundValues {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.fundAmount {
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: var(--fw-medium);
+  color: var(--color-neutral-900);
+  letter-spacing: -0.03em;
+}
+
+.fundPct {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: var(--fw-regular);
+  color: var(--color-neutral-600);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Bottom row — Figma: HORIZONTAL, 16 px gap
+   CardInsuranceCoverage: flexGrow 1   SideBanner: fixed 302 px
+   ───────────────────────────────────────────────────────────────────────── */
+
+.bottomRow {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.coverageCard {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.coverageCard > * {
+  flex: 1;
+}

@@ -1,0 +1,174 @@
+@import '../../styles/tokens.css';
+
+/* ─── Card shell ─────────────────────────────────────────────── */
+.card {
+  position: relative;
+  width: 302px;
+  height: 307px;
+  border-radius: 16px;
+  border: 1px solid #e8e8e8;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  /* Default: mountain-sunset photo */
+  background-image: url('/side-banner-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* hideImage={true} — replace the photo with the warm gradient fallback */
+.noImage {
+  background-image: linear-gradient(160deg, #f0c070 0%, #d4895a 30%, #9b5c3a 62%, #3d2010 100%);
+}
+
+/* Gradient overlay (Figma: transparent → rgba(3,3,3,.49) → rgba(0,0,0,.55) bottom-to-top) */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55)   0%,
+    rgba(3, 3, 3, 0.49)   18%,
+    transparent           38%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Full-size inner wrapper (padding 24px) ─────────────────── */
+.inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+/* ─── Content frame (grows, SPACE_BETWEEN) ───────────────────── */
+.content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ─── Top row: tag pill + arrow button ───────────────────────── */
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Frosted glass pill */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 12px;
+  background: rgba(149, 149, 149, 0.26);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 1);
+  border-radius: var(--radius-full);
+  color: #ffffff;
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* Frosted glass circle button */
+.arrowBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  background: rgba(149, 149, 149, 0.26);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 1);
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: auto;
+  transition: background 0.15s ease;
+}
+
+.arrowBtn:hover {
+  background: rgba(149, 149, 149, 0.38);
+}
+
+/* ─── KPI block (bottom of content area, over the gradient) ─── */
+.kpiBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kpiLabel {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  letter-spacing: -0.01em;
+}
+
+.kpiValue {
+  margin: 0;
+  font-family: Inter;
+  font-size: 3.14286rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: -0.14286rem;
+  background: linear-gradient(90deg, #F9EFF6 0%, #FDDFB3 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ─── Text box (badge + description) ────────────────────────── */
+.textBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.badge {
+  display: flex;
+  height: 24px;
+  padding: 0 8px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid #EEE9F6;
+  background: linear-gradient(90deg, #F2DCEC 0%, #FFECCD 100%);
+  color: #3d2010;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+
+.description {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+}

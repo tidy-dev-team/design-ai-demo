@@ -1,0 +1,217 @@
+@import '../../styles/tokens.css';
+
+/* Reuse same layout as Dashboard */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-neutral-100);
+  font-family: var(--font);
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  display: flex;
+}
+
+/* Colored card beneath all content (except nav) */
+.mainCard {
+  flex: 1;
+  margin: 16px 24px 24px 16px;
+  padding: 24px 24px 40px;
+  background-color: var(--color-surface-cream);
+  border-radius: var(--radius-2xl);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 26px;
+  font-weight: var(--fw-regular);
+  color: var(--color-neutral-900);
+  letter-spacing: 0.008em;
+  line-height: 1.5;
+}
+
+.searchRow {
+  display: flex;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.kpiRow {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.kpiCard {
+  flex: 1 1 397px;
+  min-width: 0;
+  display: flex;
+}
+
+.kpiCard > * {
+  width: 100% !important;
+}
+
+/* Pension card content: summary items + insight banner */
+.pensionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  flex: 1;
+}
+
+.summaryList {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.bottomRow {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.coverageCard {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.coverageCard > * {
+  flex: 1;
+}
+
+.sideBannerWrapper {
+  flex-shrink: 0;
+  display: flex;
+}
+
+.sideBannerWrapper > * {
+  width: 280px !important;
+  height: auto !important;
+  min-height: 307px;
+}
+
+/* Vertical bar chart (second card) */
+.barChart {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  height: 200px;
+  min-height: 180px;
+}
+
+.barChartBars {
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  width: 100%;
+  height: 100%;
+}
+
+.barChartBar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  height: 100%;
+}
+
+.barChartBarTrack {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.barChartBarFill {
+  width: 100%;
+  min-height: 24px;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  transition: height 0.3s ease;
+}
+
+/* Figma 350-1155: legend under each bar — dot + label, then bold value + grey pct */
+.barChartBarLegend {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  min-width: 0;
+}
+
+.barChartBarLegendRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.barChartBarDot {
+  flex-shrink: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.barChartBarLabel {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: var(--fw-regular);
+  color: var(--color-neutral-900);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.barChartBarLegendValues {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 4px;
+}
+
+.barChartBarValue {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+  color: var(--color-neutral-900);
+  white-space: nowrap;
+}
+
+.barChartBarPct {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: var(--fw-regular);
+  color: var(--color-neutral-600);
+  white-space: nowrap;
+}

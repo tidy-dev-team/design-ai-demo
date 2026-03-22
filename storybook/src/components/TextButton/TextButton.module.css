@@ -1,0 +1,39 @@
+@import '../../styles/tokens.css';
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: var(--fw-regular);
+  line-height: 1.15;
+  outline: none;
+  border-radius: 4px;
+}
+
+.label { white-space: nowrap; }
+
+.idle   .label { color: var(--color-neutral-600); }
+.hover  .label { color: #8b8b8b; }
+.pressed .label { color: var(--color-neutral-900); }
+.focus  .label { color: var(--color-neutral-600); }
+.disabled .label { color: var(--color-neutral-600); opacity: 0.4; }
+
+.idle   { color: var(--color-neutral-600); }
+.hover  { color: #8b8b8b; }
+.pressed { color: var(--color-neutral-900); }
+.focus  { color: var(--color-neutral-600); box-shadow: 0 0 0 1px var(--color-neutral-900); }
+.disabled { color: var(--color-neutral-600); opacity: 0.4; cursor: not-allowed; }
+
+.btn:hover:not(.disabled):not(.hover):not(.pressed):not(.focus) {
+  color: #8b8b8b;
+}
+
+.btn:focus-visible {
+  box-shadow: 0 0 0 1px var(--color-neutral-900);
+}

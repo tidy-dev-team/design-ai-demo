@@ -1,0 +1,86 @@
+@import '../../styles/tokens.css';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  padding: 24px 32px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.title {
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+  color: var(--color-neutral-900);
+  line-height: 1.25;
+}
+
+/* ── Member avatars group ────────────────────────────────────────────────── */
+
+.members {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.addBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: var(--radius-full);
+  border: 1.5px dashed var(--color-neutral-300);
+  background: none;
+  cursor: pointer;
+  color: var(--color-neutral-600);
+  font-size: 18px;
+  line-height: 1;
+  transition: background-color 0.15s ease;
+}
+
+.addBtn:hover {
+  background-color: var(--color-neutral-100);
+}
+
+/* ── Cards + CTA ─────────────────────────────────────────────────────────── */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cards {
+  display: flex;
+  gap: 12px;
+}
+
+/* Stretch each InsuranceCard to fill its share equally */
+.cards > * {
+  flex: 1 1 0;
+  min-width: 0;
+}

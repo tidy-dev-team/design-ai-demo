@@ -1,0 +1,18 @@
+@import '../../styles/tokens.css';
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 8px 1px 1px;
+  background-color: #faf9f5;
+  border-radius: var(--radius-full);
+}
+
+.name {
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: var(--fw-regular);
+  color: var(--color-neutral-900);
+  line-height: 1.21;
+}

@@ -1,0 +1,10 @@
+@import '../../styles/tokens.css';
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-green-light);
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}

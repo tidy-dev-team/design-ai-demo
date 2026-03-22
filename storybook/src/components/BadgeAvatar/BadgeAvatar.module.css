@@ -1,0 +1,32 @@
+@import '../../styles/tokens.css';
+
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+}
+
+.filled {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-neutral-200);
+}
+
+.empty {
+  background-color: transparent;
+}
+
+.dot {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-red);
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-white);
+}

@@ -1,0 +1,17 @@
+@import '../../styles/tokens.css';
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  background-color: var(--color-red);
+  color: var(--color-white);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: var(--fw-regular);
+  line-height: 1;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}

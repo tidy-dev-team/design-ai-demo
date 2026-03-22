@@ -1,0 +1,24 @@
+@import '../../styles/tokens.css';
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 6px;
+  border-radius: var(--radius-full);
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: var(--fw-regular);
+  line-height: 1.21;
+  white-space: nowrap;
+}
+
+.positive {
+  background-color: #dfeece;
+  color: var(--color-green);
+}
+
+.negative {
+  background-color: #fde8e9;
+  color: #c0282f;
+}

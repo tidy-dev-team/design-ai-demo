@@ -1,0 +1,183 @@
+@import '../../styles/tokens.css';
+
+/* ── Full-screen two-column layout ──────────────────────────────────────── */
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: var(--color-neutral-100);
+  font-family: var(--font);
+}
+
+/* ── Main scrollable area ───────────────────────────────────────────────── */
+
+.main {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px 24px 40px;
+}
+
+/* ── Page heading ───────────────────────────────────────────────────────── */
+
+.heading {
+  margin: 0;
+  font-family: var(--font);
+  font-size: 26px;
+  font-weight: var(--fw-regular);
+  color: var(--color-neutral-900);
+  letter-spacing: 0.008em;
+  line-height: 1.5;
+}
+
+/* ── Search row ─────────────────────────────────────────────────────────── */
+
+.searchRow {
+  display: flex;
+}
+
+/* ── Suggestion tags ────────────────────────────────────────────────────── */
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ── KPI cards row ──────────────────────────────────────────────────────── */
+
+.kpiRow {
+  display: flex;
+  gap: 16px;
+}
+
+.kpiCard {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+}
+
+/* Force CardKpi to fill its flex cell */
+.kpiCard > * {
+  width: 100% !important;
+  flex: 1;
+}
+
+/* ── Left card: pension summary list ────────────────────────────────────── */
+
+.pensionContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  gap: 16px;
+}
+
+.summaryList {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ── Right card: portfolio bar chart + fund list ────────────────────────── */
+
+.portfolioContent {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
+}
+
+/* Fixed-height bar row — bars are absolute px so they don't need % resolution */
+.barChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 210px;
+  flex-shrink: 0;
+}
+
+.bar {
+  flex: 1;
+  border-radius: 16px;
+}
+
+/* 3-column legend matching the Figma layout */
+.fundList {
+  display: flex;
+  gap: 12px;
+}
+
+/* Each column: name row + value row */
+.fundItem {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fundName {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fundDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.fundLabel {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: var(--fw-regular);
+  color: var(--color-neutral-600);
+  line-height: 1.2;
+}
+
+.fundValues {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.fundAmount {
+  font-family: var(--font);
+  font-size: 20px;
+  font-weight: var(--fw-medium);
+  color: var(--color-neutral-900);
+  letter-spacing: -0.03em;
+}
+
+.fundPct {
+  font-family: var(--font);
+  font-size: 13px;
+  font-weight: var(--fw-regular);
+  color: var(--color-neutral-600);
+}
+
+/* ── Bottom row ─────────────────────────────────────────────────────────── */
+
+.bottomRow {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.coverageCard {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.coverageCard > * {
+  flex: 1;
+}
