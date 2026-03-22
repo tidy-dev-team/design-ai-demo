@@ -11,7 +11,7 @@ import {
   Settings
 } from './types'
 
-const VALID_TYPES: string[] = ['COMPONENT', 'COMPONENT_SET', 'INSTANCE']
+const VALID_TYPES: string[] = ['COMPONENT', 'COMPONENT_SET', 'INSTANCE', 'FRAME', 'SECTION']
 
 let savedFileKey = ''
 
@@ -23,9 +23,10 @@ function getSelectionData(): SelectionData | null {
 
   const nodeId = sel.id
   const fileKey = figma.fileKey || savedFileKey || 'UNKNOWN'
-  const figmaUrl = `https://www.figma.com/file/${fileKey}?node-id=${nodeId}`
+  const figmaUrl = `https://www.figma.com/design/${fileKey}/file?node-id=${nodeId.replace(':', '-')}`
 
   // For instances, resolve to the main component name
+  // For frames/sections, use the frame name directly (layout mode)
   let raw = sel.name
   if (sel.type === 'INSTANCE') {
     const main = (sel as InstanceNode).mainComponent
