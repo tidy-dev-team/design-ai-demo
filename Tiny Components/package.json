@@ -21,6 +21,10 @@
     "id": "tiny-components-plugin",
     "name": "Tiny Components",
     "main": "src/main.ts",
-    "ui": "src/ui.tsx"
+    "ui": "src/ui.tsx",
+    "networkAccess": {
+      "allowedDomains": ["http://localhost:3333"],
+      "reasoning": "Local server for Storybook story generation"
+    }
   }
 }

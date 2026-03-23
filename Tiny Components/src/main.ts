@@ -6,11 +6,16 @@ import {
 } from "./componentData";
 import { extractFrameContent } from "./extraction/frameAnalyzer";
 import { applyProperties } from "./replacement/propertyApplicator";
+import {
+  initStorybookHandlers,
+  sendStorybookSelection,
+} from "./storybook/storybookHandlers";
 import type {
   ComponentMapping,
   ManualMapping,
   SelectionInfo,
   TextPropMapping,
+  ResizeUiHandler,
 } from "./types";
 import {
   FIND_COMPONENTS_EVENT,
@@ -43,6 +48,7 @@ import {
   UnmapElementEventHandler,
   UNMAP_TEXT_PROP_EVENT,
   UnmapTextPropEventHandler,
+  RESIZE_UI_EVENT,
 } from "./types";
 
 const componentCache = new Map<string, ComponentSetNode | ComponentNode>();
@@ -58,10 +64,16 @@ interface StoredTextPropBinding {
   sourcePath: number[];
 }
 
+const UI_WIDTH = 320;
+const TAB_HEIGHTS: Record<string, number> = {
+  components: 860,
+  storybook: 440,
+};
+
 export default function () {
   showUI({
-    height: 820,
-    width: 280,
+    height: TAB_HEIGHTS.components,
+    width: UI_WIDTH,
   });
 
   on<FindComponentsEventHandler>(FIND_COMPONENTS_EVENT, handleFindComponents);
@@ -112,9 +124,20 @@ export default function () {
   on<MapTextPropEventHandler>(MAP_TEXT_PROP_EVENT, handleMapTextProp);
   on<UnmapTextPropEventHandler>(UNMAP_TEXT_PROP_EVENT, handleUnmapTextProp);
 
+  // Storybook feature handlers
+  initStorybookHandlers();
+
+  // Dynamic resize when switching tabs
+  on<ResizeUiHandler>(RESIZE_UI_EVENT, (tab: string) => {
+    const height = TAB_HEIGHTS[tab] ?? TAB_HEIGHTS.components;
+    figma.ui.resize(UI_WIDTH, height);
+  });
+
+  // Unified selection change handler — dispatches to both subsystems
   figma.on("selectionchange", () => {
     const selection = handleGetSelection();
     emit<SelectionChangedEventHandler>(SELECTION_CHANGED_EVENT, selection);
+    sendStorybookSelection();
   });
 
   void hydrateManualMappings();

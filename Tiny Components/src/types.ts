@@ -253,3 +253,55 @@ export type SelectMappedNodeEventHandler = {
   name: typeof SELECT_MAPPED_NODE_EVENT;
   handler: (nodeId: string) => void;
 };
+
+// ============================================
+// Storybook Feature Types
+// ============================================
+
+export interface StorybookSettings {
+  serverUrl: string;
+  fileKey: string;
+}
+
+export interface StorybookSelectionData {
+  figmaUrl: string;
+  nodeId: string;
+  componentName: string;
+}
+
+export const STORYBOOK_SAVE_SETTINGS = "STORYBOOK_SAVE_SETTINGS" as const;
+export const STORYBOOK_LOAD_SETTINGS = "STORYBOOK_LOAD_SETTINGS" as const;
+export const STORYBOOK_GENERATE_STORY = "STORYBOOK_GENERATE_STORY" as const;
+export const STORYBOOK_GENERATE_RESULT = "STORYBOOK_GENERATE_RESULT" as const;
+export const STORYBOOK_SELECTION_CHANGE = "STORYBOOK_SELECTION_CHANGE" as const;
+export const RESIZE_UI_EVENT = "RESIZE_UI" as const;
+
+export type StorybookSaveSettingsHandler = {
+  name: typeof STORYBOOK_SAVE_SETTINGS;
+  handler: (settings: StorybookSettings) => void;
+};
+
+export type StorybookLoadSettingsHandler = {
+  name: typeof STORYBOOK_LOAD_SETTINGS;
+  handler: (settings: StorybookSettings) => void;
+};
+
+export type StorybookGenerateStoryHandler = {
+  name: typeof STORYBOOK_GENERATE_STORY;
+  handler: (data: StorybookSelectionData) => void;
+};
+
+export type StorybookGenerateResultHandler = {
+  name: typeof STORYBOOK_GENERATE_RESULT;
+  handler: (result: { status: "ok" | "error"; message: string }) => void;
+};
+
+export type StorybookSelectionChangeHandler = {
+  name: typeof STORYBOOK_SELECTION_CHANGE;
+  handler: (data: StorybookSelectionData | null) => void;
+};
+
+export type ResizeUiHandler = {
+  name: typeof RESIZE_UI_EVENT;
+  handler: (tab: string) => void;
+};

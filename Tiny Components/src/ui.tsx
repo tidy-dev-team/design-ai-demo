@@ -1,10 +1,12 @@
 import {
   Button,
   Muted,
+  Tabs,
   VerticalSpace,
   render,
   TextboxAutocomplete,
 } from "@create-figma-plugin/ui";
+import type { TabsOption } from "@create-figma-plugin/ui";
 import { emit, on } from "@create-figma-plugin/utilities";
 import { h } from "preact";
 import { useState, useEffect, useCallback } from "preact/hooks";
@@ -39,9 +41,12 @@ import {
   SelectionChangedEventHandler,
   SELECT_MAPPED_NODE_EVENT,
   SelectMappedNodeEventHandler,
+  RESIZE_UI_EVENT,
+  ResizeUiHandler,
 } from "./types";
 import type { SelectionInfo, ManualMapping, TextPropMapping } from "./types";
 import { getAllMappingIds } from "./componentData";
+import { StorybookPanel } from "./storybook/StorybookPanel";
 
 const styles = {
   container: {
@@ -209,7 +214,7 @@ const styles = {
   },
 };
 
-function Plugin() {
+function ComponentsPanel() {
   const [selection, setSelection] = useState<SelectionInfo | null>(null);
   const [mappings, setMappings] = useState<ManualMapping[]>([]);
   const [selectedMappingId, setSelectedMappingId] = useState<string>("");
@@ -414,16 +419,7 @@ function Plugin() {
     !isSelectedTextPropMapped;
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        {/* Header */}
-        <div style={styles.header}>
-          <div style={styles.title}>Tiny Components</div>
-          <div style={styles.subtitle}>
-            Replace placeholders with polished DS components
-          </div>
-        </div>
-
+    <div>
         {/* Manual Mapping Section */}
         <div style={styles.section}>
           <div style={styles.sectionTitle}>Manual Mapping</div>
@@ -641,6 +637,39 @@ function Plugin() {
             Replace from DS
           </Button>
         </div>
+    </div>
+  );
+}
+
+function Plugin() {
+  const [activeTab, setActiveTab] = useState<string>("components");
+
+  const handleTabChange = useCallback((value: string) => {
+    setActiveTab(value);
+    emit<ResizeUiHandler>(RESIZE_UI_EVENT, value);
+  }, []);
+
+  const tabOptions: TabsOption[] = [
+    { value: "components", children: <ComponentsPanel /> },
+    { value: "storybook", children: <StorybookPanel /> },
+  ];
+
+  return (
+    <div style={styles.container}>
+      <div style={styles.card}>
+        {/* Header */}
+        <div style={styles.header}>
+          <div style={styles.title}>Tiny Components</div>
+          <div style={styles.subtitle}>
+            Replace placeholders with polished DS components
+          </div>
+        </div>
+
+        <Tabs
+          options={tabOptions}
+          value={activeTab}
+          onValueChange={handleTabChange}
+        />
       </div>
 
       <VerticalSpace space="small" />
