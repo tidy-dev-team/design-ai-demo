@@ -22,7 +22,7 @@ const ICON_MAP: Record<CategoryIconType, React.ComponentType<{ size?: number; co
 };
 
 export function CategoryIcon({ icon = 'wallet', size = 32, children }: CategoryIconProps) {
-  const Icon = ICON_MAP[icon];
+  const Icon = ICON_MAP[icon] ?? WalletIcon;
   return (
     <div className={styles.container} style={{ width: size, height: size }}>
       {children ?? <Icon size={Math.round(size * 0.5625)} color="#38946a" />}

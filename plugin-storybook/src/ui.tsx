@@ -2,6 +2,7 @@ import {
   Banner,
   Button,
   Container,
+  Disclosure,
   IconWarning16,
   Muted,
   render,
@@ -31,6 +32,7 @@ function Plugin() {
   const [message, setMessage] = useState('')
   const [serverUrl, setServerUrl] = useState('http://localhost:3333')
   const [fileKey, setFileKey] = useState('')
+  const [showSettings, setShowSettings] = useState(false)
 
   useEffect(() => {
     on<LoadSettingsHandler>('LOAD_SETTINGS', (settings) => {
@@ -80,27 +82,35 @@ function Plugin() {
     <Container space="medium">
       <VerticalSpace space="large" />
 
-      <Text>
-        <Muted>Server URL</Muted>
-      </Text>
-      <VerticalSpace space="small" />
-      <Textbox
-        value={serverUrl}
-        onValueInput={handleServerUrlChange}
-        placeholder="http://localhost:3333"
-      />
+      <Disclosure
+        open={showSettings}
+        onClick={() => setShowSettings(!showSettings)}
+        title="Settings"
+      >
+        <VerticalSpace space="small" />
+        <Text>
+          <Muted>Server URL</Muted>
+        </Text>
+        <VerticalSpace space="small" />
+        <Textbox
+          value={serverUrl}
+          onValueInput={handleServerUrlChange}
+          placeholder="http://localhost:3333"
+        />
 
-      <VerticalSpace space="medium" />
+        <VerticalSpace space="medium" />
 
-      <Text>
-        <Muted>Figma File Key</Muted>
-      </Text>
-      <VerticalSpace space="small" />
-      <Textbox
-        value={fileKey}
-        onValueInput={handleFileKeyChange}
-        placeholder="e.g. 7LWL1TZvifdDf8Oz2AH1tZ"
-      />
+        <Text>
+          <Muted>Figma File Key</Muted>
+        </Text>
+        <VerticalSpace space="small" />
+        <Textbox
+          value={fileKey}
+          onValueInput={handleFileKeyChange}
+          placeholder="e.g. 7LWL1TZvifdDf8Oz2AH1tZ"
+        />
+        <VerticalSpace space="small" />
+      </Disclosure>
 
       <VerticalSpace space="large" />
 
