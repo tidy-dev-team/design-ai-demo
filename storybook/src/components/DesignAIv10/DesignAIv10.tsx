@@ -8,92 +8,69 @@ import { CardKpi } from '../CardKpi/CardKpi.tsx';
 import { CardInsuranceCoverage } from '../CardInsuranceCoverage/CardInsuranceCoverage.tsx';
 import { SideBanner } from '../SideBanner/SideBanner.tsx';
 
-// ── Suggestion tags ────────────────────────────────────────────────────────
-
-const SUGGESTION_TAGS = [
+const TAGS = [
   'Change pension plans',
   'Savings calculator',
   'Quick actions',
   'Common questions',
-] as const;
-
-// ── Component ──────────────────────────────────────────────────────────────
+];
 
 export interface DesignAIv10Props {
-  /** First name shown in the greeting heading */
   userName?: string;
-  /** Full name shown in the nav panel */
   userFullName?: string;
-  /** Subtitle shown under the name in the nav panel */
   userPlan?: string;
   activeNavId?: string;
 }
 
 export function DesignAIv10({
-  userName     = 'David',
+  userName = 'David',
   userFullName = 'David Levi',
-  userPlan     = 'Portfolio ID: 20144874',
-  activeNavId  = 'dashboard',
+  userPlan = 'Portfolio ID: 20144874',
+  activeNavId = 'dashboard',
 }: DesignAIv10Props) {
   return (
     <div className={styles.layout}>
-      {/* Left navigation */}
       <NavigationPanel
         userName={userFullName}
         userPlan={userPlan}
         activeId={activeNavId}
       />
 
-      {/* Main content */}
       <main className={styles.main}>
         <div className={styles.container}>
-
-          {/* Heading */}
           <h1 className={styles.heading}>Welcome back, {userName}</h1>
 
-          {/* AI search bar */}
-          <div className={styles.searchRow}>
-            <SearchBar placeholder="Ask me anything..." state="idle" />
-          </div>
+          <SearchBar placeholder="Ask me anything..." state="idle" />
 
-          {/* Suggestion tags */}
           <div className={styles.tags}>
-            {SUGGESTION_TAGS.map((label) => (
+            {TAGS.map((label) => (
               <Tag key={label} label={label} />
             ))}
           </div>
 
-          {/* KPI cards row */}
           <div className={styles.kpiRow}>
-            <div className={styles.kpiCard}>
-              <CardKpi
-                title="Card Title"
-                icon="wallet"
-                kpiLabel="KPI Title"
-                kpiValue="$123,456"
-                trend="12.4%"
-                trendDirection="positive"
-                ctaLabel="View Full Portfolio"
-              />
-            </div>
-            <div className={styles.kpiCard}>
-              <CardKpi
-                title="Card Title"
-                icon="wallet"
-                kpiLabel="KPI Title"
-                kpiValue="$123,456"
-                trend="12.4%"
-                trendDirection="positive"
-                ctaLabel="View Full Portfolio"
-              />
-            </div>
+            <CardKpi
+              title="Card Title"
+              icon="wallet"
+              kpiValue="$123,456"
+              kpiLabel="KPI Title"
+              trend="12.4%"
+              trendDirection="positive"
+              ctaLabel="View Full Portfolio"
+            />
+            <CardKpi
+              title="Card Title"
+              icon="home"
+              kpiValue="$123,456"
+              kpiLabel="KPI Title"
+              trend="12.4%"
+              trendDirection="positive"
+              ctaLabel="View Full Portfolio"
+            />
           </div>
 
-          {/* Bottom row — insurance coverage + side banner */}
           <div className={styles.bottomRow}>
-            <div className={styles.coverageCard}>
-              <CardInsuranceCoverage />
-            </div>
+            <CardInsuranceCoverage />
             <SideBanner
               tag="2025 Wrapped"
               label="Total Contributions"
@@ -102,7 +79,6 @@ export function DesignAIv10({
               description="Maximum pension contributions reached"
             />
           </div>
-
         </div>
       </main>
     </div>
