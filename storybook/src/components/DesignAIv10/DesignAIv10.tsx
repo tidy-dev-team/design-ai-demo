@@ -8,6 +8,8 @@ import { CardKpi } from '../CardKpi/CardKpi.tsx';
 import { CardInsuranceCoverage } from '../CardInsuranceCoverage/CardInsuranceCoverage.tsx';
 import { SideBanner } from '../SideBanner/SideBanner.tsx';
 
+/* ── Decorative constants ── */
+
 const TAGS = [
   'Change pension plans',
   'Savings calculator',
@@ -15,12 +17,42 @@ const TAGS = [
   'Common questions',
 ];
 
+const KPI_CARDS: {
+  title: string;
+  icon: 'wallet' | 'home' | 'shield' | 'savings';
+  kpiValue: string;
+  kpiLabel: string;
+  trend: string;
+  trendDirection: 'positive' | 'negative';
+}[] = [
+  {
+    title: 'Card Title',
+    icon: 'wallet',
+    kpiValue: '$123,456',
+    kpiLabel: 'KPI Title',
+    trend: '12.4%',
+    trendDirection: 'positive',
+  },
+  {
+    title: 'Card Title',
+    icon: 'home',
+    kpiValue: '$123,456',
+    kpiLabel: 'KPI Title',
+    trend: '12.4%',
+    trendDirection: 'positive',
+  },
+];
+
+/* ── Props ── */
+
 export interface DesignAIv10Props {
   userName?: string;
   userFullName?: string;
   userPlan?: string;
   activeNavId?: string;
 }
+
+/* ── Component ── */
 
 export function DesignAIv10({
   userName = 'David',
@@ -38,46 +70,43 @@ export function DesignAIv10({
 
       <main className={styles.main}>
         <div className={styles.container}>
-          <h1 className={styles.heading}>Welcome back, {userName}</h1>
+          <div className={styles.contentCard}>
+            <h1 className={styles.heading}>Welcome back, {userName}</h1>
 
-          <SearchBar placeholder="Ask me anything..." state="idle" />
+            <SearchBar placeholder="Ask me anything..." state="idle" />
 
-          <div className={styles.tags}>
-            {TAGS.map((label) => (
-              <Tag key={label} label={label} />
-            ))}
-          </div>
+            <div className={styles.tags}>
+              {TAGS.map((label) => (
+                <Tag key={label} label={label} />
+              ))}
+            </div>
 
-          <div className={styles.kpiRow}>
-            <CardKpi
-              title="Card Title"
-              icon="wallet"
-              kpiValue="$123,456"
-              kpiLabel="KPI Title"
-              trend="12.4%"
-              trendDirection="positive"
-              ctaLabel="View Full Portfolio"
-            />
-            <CardKpi
-              title="Card Title"
-              icon="home"
-              kpiValue="$123,456"
-              kpiLabel="KPI Title"
-              trend="12.4%"
-              trendDirection="positive"
-              ctaLabel="View Full Portfolio"
-            />
-          </div>
+            <div className={styles.kpiRow}>
+              {KPI_CARDS.map((card, i) => (
+                <div key={i} className={styles.kpiCard}>
+                  <CardKpi
+                    title={card.title}
+                    icon={card.icon}
+                    kpiValue={card.kpiValue}
+                    kpiLabel={card.kpiLabel}
+                    trend={card.trend}
+                    trendDirection={card.trendDirection}
+                    ctaLabel="View Full Portfolio"
+                  />
+                </div>
+              ))}
+            </div>
 
-          <div className={styles.bottomRow}>
-            <CardInsuranceCoverage />
-            <SideBanner
-              tag="2025 Wrapped"
-              label="Total Contributions"
-              kpi="$56,200"
-              badge="🏆 Top Achievement"
-              description="Maximum pension contributions reached"
-            />
+            <div className={styles.bottomRow}>
+              <CardInsuranceCoverage />
+              <SideBanner
+                tag="2025 Wrapped"
+                label="Total Contributions"
+                kpi="$56,200"
+                badge="🏆 Top Achievement"
+                description="Maximum pension contributions reached"
+              />
+            </div>
           </div>
         </div>
       </main>

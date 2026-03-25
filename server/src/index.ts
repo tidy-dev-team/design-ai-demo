@@ -1,6 +1,33 @@
 import 'dotenv/config';
 import express from 'express';
+import net from 'node:net';
+import { spawn } from 'node:child_process';
+import path from 'node:path';
 import { generate } from './generate.js';
+
+const STORYBOOK_ROOT = process.env.STORYBOOK_ROOT || '../storybook';
+const STORYBOOK_PORT = 6006;
+const STORYBOOK_URL = `http://localhost:${STORYBOOK_PORT}`;
+
+function isPortListening(port: number): Promise<boolean> {
+  return new Promise((resolve) => {
+    const socket = net.createConnection({ port, host: '127.0.0.1' });
+    socket.once('connect', () => { socket.destroy(); resolve(true); });
+    socket.once('error', () => { resolve(false); });
+  });
+}
+
+function waitForPort(port: number, retries = 15, intervalMs = 1000): Promise<boolean> {
+  return new Promise((resolve) => {
+    let attempts = 0;
+    const check = async () => {
+      if (await isPortListening(port)) return resolve(true);
+      if (++attempts >= retries) return resolve(false);
+      setTimeout(check, intervalMs);
+    };
+    check();
+  });
+}
 
 const app = express();
 
@@ -39,6 +66,41 @@ app.post('/generate', async (req, res) => {
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error';
     console.error(`[server] Error: ${message}`);
+    res.status(500).json({ status: 'error', message });
+  }
+});
+
+app.post('/open-storybook', async (_req, res) => {
+  try {
+    const alreadyRunning = await isPortListening(STORYBOOK_PORT);
+    if (alreadyRunning) {
+      console.log('[server] Storybook already running');
+      res.json({ status: 'ok', url: STORYBOOK_URL });
+      return;
+    }
+
+    console.log('[server] Starting Storybook...');
+    const cwd = path.resolve(STORYBOOK_ROOT);
+    const child = spawn('npm', ['run', 'storybook'], {
+      cwd,
+      detached: true,
+      stdio: 'ignore',
+    });
+    child.unref();
+
+    const ready = await waitForPort(STORYBOOK_PORT);
+    if (ready) {
+      console.log('[server] Storybook is ready');
+      res.json({ status: 'ok', url: STORYBOOK_URL });
+    } else {
+      res.status(504).json({
+        status: 'error',
+        message: 'Storybook did not start within 15 seconds',
+      });
+    }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    console.error(`[server] open-storybook error: ${message}`);
     res.status(500).json({ status: 'error', message });
   }
 });

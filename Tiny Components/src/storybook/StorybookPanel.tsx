@@ -1,11 +1,9 @@
 import {
   Banner,
   Button,
-  Disclosure,
   IconWarning16,
   Muted,
   Text,
-  Textbox,
   VerticalSpace,
 } from "@create-figma-plugin/ui";
 import { emit, on } from "@create-figma-plugin/utilities";
@@ -13,18 +11,18 @@ import { h } from "preact";
 import { useCallback, useEffect, useState } from "preact/hooks";
 import type {
   StorybookSelectionData,
-  StorybookLoadSettingsHandler,
   StorybookSelectionChangeHandler,
   StorybookGenerateResultHandler,
-  StorybookSaveSettingsHandler,
   StorybookGenerateStoryHandler,
+  StorybookOpenHandler,
+  StorybookOpenResultHandler,
 } from "../types";
 import {
-  STORYBOOK_LOAD_SETTINGS,
   STORYBOOK_SELECTION_CHANGE,
   STORYBOOK_GENERATE_RESULT,
-  STORYBOOK_SAVE_SETTINGS,
   STORYBOOK_GENERATE_STORY,
+  STORYBOOK_OPEN,
+  STORYBOOK_OPEN_RESULT,
 } from "../types";
 
 type Status = "idle" | "generating" | "done" | "error";
@@ -35,18 +33,9 @@ export function StorybookPanel() {
   );
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState("");
-  const [serverUrl, setServerUrl] = useState("http://localhost:3333");
-  const [fileKey, setFileKey] = useState("");
-  const [showSettings, setShowSettings] = useState(false);
+  const [storybookLoading, setStorybookLoading] = useState(false);
 
   useEffect(() => {
-    const offLoad = on<StorybookLoadSettingsHandler>(
-      STORYBOOK_LOAD_SETTINGS,
-      (settings) => {
-        setServerUrl(settings.serverUrl);
-        setFileKey(settings.fileKey);
-      }
-    );
     const offSelection = on<StorybookSelectionChangeHandler>(
       STORYBOOK_SELECTION_CHANGE,
       (data) => {
@@ -70,34 +59,22 @@ export function StorybookPanel() {
       }
     );
 
+    const offOpen = on<StorybookOpenResultHandler>(
+      STORYBOOK_OPEN_RESULT,
+      (result) => {
+        setStorybookLoading(false);
+        if (result.status === "ok" && result.url) {
+          window.open(result.url);
+        }
+      }
+    );
+
     return () => {
-      offLoad();
       offSelection();
       offResult();
+      offOpen();
     };
   }, []);
-
-  const handleServerUrlChange = useCallback(
-    (value: string) => {
-      setServerUrl(value);
-      emit<StorybookSaveSettingsHandler>(STORYBOOK_SAVE_SETTINGS, {
-        serverUrl: value,
-        fileKey,
-      });
-    },
-    [fileKey]
-  );
-
-  const handleFileKeyChange = useCallback(
-    (value: string) => {
-      setFileKey(value);
-      emit<StorybookSaveSettingsHandler>(STORYBOOK_SAVE_SETTINGS, {
-        serverUrl,
-        fileKey: value,
-      });
-    },
-    [serverUrl]
-  );
 
   const handleGenerate = useCallback(() => {
     if (!selection) return;
@@ -106,40 +83,13 @@ export function StorybookPanel() {
     emit<StorybookGenerateStoryHandler>(STORYBOOK_GENERATE_STORY, selection);
   }, [selection]);
 
+  const handleOpenStorybook = useCallback(() => {
+    setStorybookLoading(true);
+    emit<StorybookOpenHandler>(STORYBOOK_OPEN);
+  }, []);
+
   return (
     <div style={{ padding: "12px 16px" }}>
-      <VerticalSpace space="small" />
-
-      <Disclosure
-        open={showSettings}
-        onClick={() => setShowSettings(!showSettings)}
-        title="Settings"
-      >
-        <VerticalSpace space="small" />
-        <Text>
-          <Muted>Server URL</Muted>
-        </Text>
-        <VerticalSpace space="small" />
-        <Textbox
-          value={serverUrl}
-          onValueInput={handleServerUrlChange}
-          placeholder="http://localhost:3333"
-        />
-
-        <VerticalSpace space="medium" />
-
-        <Text>
-          <Muted>Figma File Key</Muted>
-        </Text>
-        <VerticalSpace space="small" />
-        <Textbox
-          value={fileKey}
-          onValueInput={handleFileKeyChange}
-          placeholder="e.g. 7LWL1TZvifdDf8Oz2AH1tZ"
-        />
-        <VerticalSpace space="small" />
-      </Disclosure>
-
       <VerticalSpace space="large" />
 
       {!selection ? (
@@ -155,9 +105,20 @@ export function StorybookPanel() {
       <VerticalSpace space="medium" />
 
       {status === "done" && (
-        <Banner icon={<IconWarning16 />} variant="success">
-          {message}
-        </Banner>
+        <div>
+          <Banner icon={<IconWarning16 />} variant="success">
+            {message}
+          </Banner>
+          <VerticalSpace space="small" />
+          <Button
+            fullWidth
+            secondary
+            onClick={handleOpenStorybook}
+            disabled={storybookLoading}
+          >
+            {storybookLoading ? "Starting Storybook…" : "Open Storybook"}
+          </Button>
+        </div>
       )}
       {status === "error" && (
         <Banner icon={<IconWarning16 />} variant="warning">

@@ -26,7 +26,7 @@ export function generate(
     const promptFile = path.join(tmpdir(), `claude-prompt-${Date.now()}.txt`);
     writeFileSync(promptFile, prompt);
 
-    const shellCmd = `cat "${promptFile}" | /Users/dmitridmitriev/.local/bin/claude -p --permission-mode acceptEdits --allowedTools 'Write,Edit,Read,Glob,Grep,Bash,mcp__plugin_figma_figma__get_design_context,mcp__plugin_figma_figma__get_screenshot' 2>&1`;
+    const shellCmd = `cat "${promptFile}" | /Users/dmitridmitriev/.local/bin/claude -p --permission-mode acceptEdits --allowedTools 'Write,Edit,Read,Glob,Grep,Bash,mcp__claude_ai_Figma__get_design_context,mcp__claude_ai_Figma__get_screenshot' 2>&1`;
 
     console.log(`[generate] cwd: ${cwd}`);
     console.log(`[generate] Screen: ${componentName} → ${screenDir}/`);
